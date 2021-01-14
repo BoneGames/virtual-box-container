@@ -1,1 +1,1 @@
-docker build -t virtualbox
+docker build -t virtualbox .
