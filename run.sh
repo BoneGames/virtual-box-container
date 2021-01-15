@@ -7,7 +7,6 @@ docker run --rm -it \
   --network=host \
   --device /dev/vboxdrv:/dev/vboxdrv \
   -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
-  -v /tmp:/tmp \
   --interactive \
   --tty \
   virtualbox:latest
