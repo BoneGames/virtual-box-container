@@ -35,5 +35,8 @@ RUN useradd \
 # Assume non-root user
 USER vnc
 
+# Copy windows machine image
+COPY /windows_machine.ova .
+
 # Begin entrypoint
 ENTRYPOINT /entrypoint.sh
