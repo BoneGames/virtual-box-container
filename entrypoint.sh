@@ -1,10 +1,11 @@
 # Setup vnc config directory
 mkdir $HOME/.vnc
 
+vboxmanage import /cloud-computer/virtual-machines/windows_machine_logged_in.ova
+
 # Setup vnc x server entrypoint
-echo "VBoxManage startvm 'windows_machine_GA' --type gui" > $HOME/.vnc/xstartup
+echo "vboxmanage startvm 'windows_machine 1' --type gui" > $HOME/.vnc/xstartup
 # echo virtualbox > $HOME/.vnc/xstartup
-# echo xeyes > $HOME/.vnc/xstartup
 
 # Start vnc server
 tigervncserver :2 -SecurityTypes none

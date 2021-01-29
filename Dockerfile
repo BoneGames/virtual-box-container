@@ -1,4 +1,20 @@
-FROM jrei/systemd-ubuntu
+FROM ubuntu:20.04
+ENV TZ Australia/Sydney
+
+# Install locales and timezone data
+RUN apt-get update -qq && \
+  apt-get install -qq \
+  locales \
+  tzdata
+
+# Generate locales
+RUN locale-gen $LANG && \
+  update-locale LC_ALL=$LC_ALL LANG=$LANG && \
+  dpkg-reconfigure --frontend=noninteractive locales
+
+# Set timezone
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+  echo $TZ > /etc/timezone
 
 # Install dependencies
 RUN apt-get -qq update && \
@@ -29,23 +45,23 @@ RUN apt-get -qq install psmisc \
   libqt5widgets5 \
   libqt5x11extras5 \
   libsdl1.2debian \
-  libvpx6
+  libvpx6 \
+  python2
 
-RUN apt-get -qq install python2
 
+# RUN wget -q -O vbox.deb https://download.virtualbox.org/virtualbox/6.1.10/virtualbox-6.1_6.1.10-138449~Ubuntu~eoan_amd64.deb && \
+#   dpkg -i vbox.deb || apt-get install -qq --fix-broken
 
-RUN wget -q -O vbox.deb https://download.virtualbox.org/virtualbox/6.1.10/virtualbox-6.1_6.1.10-138449~Ubuntu~eoan_amd64.deb && \
+RUN wget -q -O vbox.deb http://download.virtualbox.org/virtualbox/6.1.16/virtualbox-6.1_6.1.16-140961~Ubuntu~eoan_amd64.deb && \
   dpkg -i vbox.deb || apt-get install -qq --fix-broken
+
 
 # Install novnc
 RUN git clone --depth 1 https://github.com/cloud-computer/noVNC.git /opt/noVNC && \
   git clone https://github.com/novnc/websockify /opt/noVNC/utils/websockify
 
 # Copy windows machine image
-COPY windows_machine_GA.ova .
-
-# set up windows machine image in virtualbox
-RUN vboxmanage import windows_machine_GA.ova
+# COPY windows_machine_GA.ova .
 
 # put a wait until finished here so that the build step completes the process and run has the machine ready to launch
 
