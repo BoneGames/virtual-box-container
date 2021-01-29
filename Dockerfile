@@ -60,9 +60,12 @@ RUN wget -q -O vbox.deb http://download.virtualbox.org/virtualbox/6.1.16/virtual
 RUN git clone --depth 1 https://github.com/cloud-computer/noVNC.git /opt/noVNC && \
   git clone https://github.com/novnc/websockify /opt/noVNC/utils/websockify
 
+<<<<<<< HEAD
 # Copy windows machine image
 # COPY windows_machine_GA.ova .
 
+=======
+>>>>>>> ec23e3c8633e8f4d9bd7766fa1570be57870f4a0
 # put a wait until finished here so that the build step completes the process and run has the machine ready to launch
 
 RUN apt-get -qq install nano xdotool kmod
@@ -73,8 +76,20 @@ RUN useradd \
   --groups sudo,tty,video \
   vnc
 
+WORKDIR /home/vnc
+
+# Copy windows machine image
+COPY windows_machine_logged_in.ova .
+
+RUN apt-get install -y openbox
+
+RUN chown vnc:vnc windows_machine_logged_in.ova 
+
 # Assume non-root user
 USER vnc
+
+# set up windows machine image in virtualbox
+RUN vboxmanage import windows_machine_logged_in.ova
 
 # copy fullscreen script
 COPY fullscreen-always.sh /
