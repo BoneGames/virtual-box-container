@@ -28,12 +28,6 @@ RUN apt-get -qq update && \
   wget \
   x11-apps
 
-# Install virtualbox
-# RUN wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | apt-key add - && \
-#   wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | apt-key add - && \
-#   add-apt-repository "deb https://download.virtualbox.org/virtualbox/debian bionic contrib" && \
-#   apt-get update && \
-
 # install vbox dependencies
 RUN apt-get -qq install psmisc \
   libcurl4 \
@@ -48,10 +42,7 @@ RUN apt-get -qq install psmisc \
   libvpx6 \
   python2
 
-
-# RUN wget -q -O vbox.deb https://download.virtualbox.org/virtualbox/6.1.10/virtualbox-6.1_6.1.10-138449~Ubuntu~eoan_amd64.deb && \
-#   dpkg -i vbox.deb || apt-get install -qq --fix-broken
-
+# install virtualbox
 RUN wget -q -O vbox.deb http://download.virtualbox.org/virtualbox/6.1.16/virtualbox-6.1_6.1.16-140961~Ubuntu~eoan_amd64.deb && \
   dpkg -i vbox.deb || apt-get install -qq --fix-broken
 
@@ -60,14 +51,8 @@ RUN wget -q -O vbox.deb http://download.virtualbox.org/virtualbox/6.1.16/virtual
 RUN git clone --depth 1 https://github.com/cloud-computer/noVNC.git /opt/noVNC && \
   git clone https://github.com/novnc/websockify /opt/noVNC/utils/websockify
 
-<<<<<<< HEAD
-# Copy windows machine image
-# COPY windows_machine_GA.ova .
 
-=======
->>>>>>> ec23e3c8633e8f4d9bd7766fa1570be57870f4a0
-# put a wait until finished here so that the build step completes the process and run has the machine ready to launch
-
+# testing bits
 RUN apt-get -qq install nano xdotool kmod
 
 # Create a non-root user for safe operation
@@ -79,23 +64,18 @@ RUN useradd \
 WORKDIR /home/vnc
 
 # Copy windows machine image
-COPY windows_machine_logged_in.ova .
+# COPY windows_machine_logged_in.ova .
 
 RUN apt-get install -y openbox
-
-RUN chown vnc:vnc windows_machine_logged_in.ova 
 
 # Assume non-root user
 USER vnc
 
-# set up windows machine image in virtualbox
-RUN vboxmanage import windows_machine_logged_in.ova
-
 # copy fullscreen script
-COPY fullscreen-always.sh /
+COPY fullscreen-always.sh
 
 # Copy entrypoint
-COPY entrypoint.sh /
+COPY entrypoint.sh
 
 # Begin entrypoint
 ENTRYPOINT /entrypoint.sh
