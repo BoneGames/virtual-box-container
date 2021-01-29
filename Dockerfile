@@ -72,10 +72,12 @@ RUN apt-get install -y openbox
 USER vnc
 
 # copy fullscreen script
-COPY fullscreen-always.sh
+COPY fullscreen-always.sh /
 
 # Copy entrypoint
-COPY entrypoint.sh
+COPY entrypoint.sh /
+
+COPY gdrive-webget.sh /
 
 # Begin entrypoint
 ENTRYPOINT /entrypoint.sh
