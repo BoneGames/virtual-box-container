@@ -64,7 +64,7 @@ RUN useradd \
 WORKDIR /home/vnc
 
 # Copy windows machine image
-# COPY windows_machine_logged_in.ova .
+COPY windows_machine_logged_in.ova .
 
 RUN apt-get install -y openbox
 
@@ -80,4 +80,4 @@ COPY entrypoint.sh /
 COPY gdrive-webget.sh /
 
 # Begin entrypoint
-ENTRYPOINT /entrypoint.sh
+ENTRYPOINT /entrypoint-local.sh

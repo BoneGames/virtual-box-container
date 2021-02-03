@@ -1,8 +1,8 @@
 
-# This script takes 2 arguments: 
-# Gdrive download link
-# downloaded file name
-# only the first is compulsary
+# This script takes 2 arguments:
+# 1: Gdrive download link
+# 2: downloaded file name
+# only the first is compulsory
 # The script should download the file to the current pwd
 
 
@@ -22,6 +22,6 @@ echo $FILEID
 echo $FILENAME
 
 
- 
+
 # do webget
 wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate "https://docs.google.com/uc?export=download&id=${FILEID}" -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=${FILEID}" -O $FILENAME && rm -rf /tmp/cookies.txt

@@ -3,12 +3,12 @@ mkdir $HOME/.vnc
 
 
 ### GET .OVA FILE REMOTELY ##
-# LINK='https://drive.google.com/file/d/1kFSFHtrfsnwHzpekPb0ASLO9KoWt8mrt/view?usp=sharing'
-# FILENAME='windows_machine_logged_in.ova'
-# ./gdrive-webget.sh "$LINK" "$FILENAME"
+LINK='https://drive.google.com/file/d/1kFSFHtrfsnwHzpekPb0ASLO9KoWt8mrt/view?usp=sharing'
+FILENAME='windows_machine_logged_in.ova'
+./gdrive-webget.sh "$LINK" "$FILENAME"
 
 # all hardcoded version
-wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1kFSFHtrfsnwHzpekPb0ASLO9KoWt8mrt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1kFSFHtrfsnwHzpekPb0ASLO9KoWt8mrt" -O 'windows_machine_logged_in.ova' && rm -rf /tmp/cookies.txt### GET .OVA FILE REMOTELY ##
+# wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1kFSFHtrfsnwHzpekPb0ASLO9KoWt8mrt' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1kFSFHtrfsnwHzpekPb0ASLO9KoWt8mrt" -O 'windows_machine_logged_in.ova' && rm -rf /tmp/cookies.txt### GET .OVA FILE REMOTELY ##
 
 
 # chown vnc:vnc windows_machine_logged_in.ova
